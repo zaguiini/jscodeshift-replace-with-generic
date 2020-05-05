@@ -1,4 +1,5 @@
-import { Transform, TSTypeOperator } from "jscodeshift";
+import { Transform } from "jscodeshift";
+import { TSTypeKind } from "ast-types/gen/kinds";
 
 const genericName = "Freeze";
 
@@ -9,7 +10,9 @@ const transform: Transform = (file, api) => {
     .find(j.TSTypeAnnotation)
     .filter((path) => {
       try {
-        return path.parentPath.parentPath.name === "params";
+        const isTypedParameter = path.parentPath.parentPath.name === "params";
+
+        return isTypedParameter;
       } catch {
         return false;
       }
@@ -19,7 +22,7 @@ const transform: Transform = (file, api) => {
         j.tsTypeReference.from({
           typeName: j.identifier(genericName),
           typeParameters: j.tsTypeParameterInstantiation.from({
-            params: [node.value.typeAnnotation as TSTypeOperator],
+            params: [node.value.typeAnnotation as TSTypeKind],
           }),
         })
       );
