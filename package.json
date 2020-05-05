@@ -1,0 +1,17 @@
+{
+  "name": "freeze",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "jscodeshift": "^0.9.0",
+    "react": "^16.13.1"
+  },
+  "devDependencies": {
+    "@types/jscodeshift": "^0.7.0",
+    "@types/react": "^16.9.34"
+  },
+  "scripts": {
+    "transform": "jscodeshift -t ensure-freeze-props.ts src/*.tsx --parser tsx --dry --print"
+  }
+}
