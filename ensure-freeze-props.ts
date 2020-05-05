@@ -1,5 +1,7 @@
 import { Transform, TSTypeOperator } from "jscodeshift";
 
+const genericName = "Freeze";
+
 const transform: Transform = (file, api) => {
   const j = api.jscodeshift;
 
@@ -15,7 +17,7 @@ const transform: Transform = (file, api) => {
     .replaceWith((node) => {
       return j.tsTypeAnnotation(
         j.tsTypeReference.from({
-          typeName: j.identifier("Freeze"),
+          typeName: j.identifier(genericName),
           typeParameters: j.tsTypeParameterInstantiation.from({
             params: [node.value.typeAnnotation as TSTypeOperator],
           }),
